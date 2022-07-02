@@ -1,4 +1,5 @@
 import React from "react";
+import { WithRouter } from "./WithRouter";
 
 class AddContact extends React.Component {
     state = {
@@ -15,7 +16,8 @@ class AddContact extends React.Component {
         this.props.addContactHandler(this.state);
         //console.log(this.state);
         this.setState({name: "", email: ""});
-        //console.log(this.state);
+       //console.log(this.props);
+        this.props.navigate("/");
     };
     render() {
         return (
@@ -50,4 +52,4 @@ class AddContact extends React.Component {
     }
 }
 
-export default AddContact;
+export default WithRouter(AddContact);
