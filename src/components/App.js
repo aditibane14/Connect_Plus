@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes as Switch, Route } from 'react-router-dom';
-import {v4 as uuid} from 'uuid';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes as Switch,
+  Route,
+} from "react-router-dom";
+import { v4 as uuid } from "uuid";
+import "./App.css";
 import Header from "./Header";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
+import ContactDetails from "./ContactDetails";
+import NavBar from "./NavBar";
 
 function App() {
   const LOCAL_STORAGE_KEY = "contacts";
-  const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));   
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+  );
+  const [selectedContact, setSelectedContact] = useState(0);
   const addContactHandler = (contact) => {
     console.log(contact);
     //setContacts([...contacts, contact]);
-    setContacts([...contacts, {id: uuid(), ...contact }]);
+    setContacts([...contacts, { id: uuid(), ...contact }]);
   };
 
   const removeContactHandler = (id) => {
@@ -29,21 +38,32 @@ function App() {
   }, [contacts]);
 
   return (
-    <div className="ui container">
-      <Router>
-        <Switch>
-          {/* <Route path="/" exact render={(props) => {<ContactList {...props} contacts={contacts} getContactId={removeContactHandler} />}}/>
-          <Route path="/add" exact render={(props) => {<AddContact {...props} addContactHandler={addContactHandler} />}}/> */}
-          <Route path="/" exact element = {<ContactList contacts={contacts} getContactId={removeContactHandler} />}/>
-          <Route path="/add" exact element = {<AddContact addContactHandler={addContactHandler} />}/>
-          
-        </Switch>
-      </Router>
-      {/* <Header /> */}
-      
-      
-    </div>
-);
+    <>
+      <div className>
+        <Router>
+            <NavBar />
+          <Switch>
+            <Route
+              path="/"
+              exact
+              element={
+                <ContactList
+                  contacts={contacts}
+                  getContactId={removeContactHandler}
+                />
+              }
+            />
+            <Route
+              path="/add"
+              exact
+              element={<AddContact addContactHandler={addContactHandler} />}
+            />
+            <Route path="/contact/:id" exact element={<ContactDetails />} />
+          </Switch>
+        </Router>
+      </div>
+    </>
+  );
 }
 
 export default App;
