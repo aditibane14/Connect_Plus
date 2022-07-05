@@ -23,20 +23,20 @@ const ContactList = (props) => {
   }
   return (
     <div className="container p-3">
-      <div className="row my-auto">
+      <div className="row mx-auto align-items-center flex-row">
         <div className="col">
           <h2>Contact List</h2>
         </div>
-        <div className="col-md-auto">
-          <input className="form-control" ref={inputTerm} type="text" placeholder="Search" value={props.search} onChange= {getSearch}></input>
-        </div>
+      
         <div className="col-md-auto">
           <Link to="/add">
             <button className="btn btn-primary btn-lg">Add Contact</button>
           </Link>
         </div>
       </div>
-
+      <div className="col-md-auto m-3">
+          <input className="form-control" ref={inputTerm} type="text" placeholder="Search" value={props.search} onChange= {getSearch}></input>
+        </div>
       {renderContactList}
     </div>
   );
